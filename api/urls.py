@@ -8,4 +8,5 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('logs/', views.LogsAPIView.as_view())
 ]
