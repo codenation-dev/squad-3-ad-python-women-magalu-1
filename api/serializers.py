@@ -5,7 +5,7 @@ from api.models import Logs
 class LogsModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Logs
-        fields = ["level", "description", "code_error", "environment", "status"]  #, "date_create"]
+        fields = ["level", "description", "code_error", "environment", "status"]
 
     def create(self, validated_data):
         instance = self.Meta.model(**validated_data)
