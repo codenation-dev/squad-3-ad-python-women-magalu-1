@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -7,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 
 from api.models import Logs
-from api.serializers import LogsModelSerializer
+from api.serializers import LogsModelSerializer, UserModelSerializer
 
 # Create your views here.
 
@@ -38,3 +39,17 @@ def cadastrar_erro(request):
     return Response(status=status.HTTP_400_BAD_REQUEST) 
 '''
 
+class UserAPIView(APIView):
+    serializer_class = UserModelSerializer
+
+    def get(self, request):
+        user = User.objects.all()
+        serializer = self.serializer_class(user, many=True)
+        return Response(serializer.data) 
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
