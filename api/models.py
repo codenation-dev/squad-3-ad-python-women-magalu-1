@@ -31,12 +31,14 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class Users(AbstractBaseUser):
+class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
-    name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     password = models.CharField(max_length=50, validators=[MinLengthValidator(8)])
     status = models.BooleanField(default=True)
     date_update = models.DateTimeField(auto_now=True)
@@ -48,7 +50,7 @@ class Users(AbstractBaseUser):
         db_table = 'users'
 
 
-class Logs(models.Model):
+class Log(models.Model):
     LEVELS_CHOICES = (
         ('critical', 'CRITICAL'),
         ('debug', 'DEBUG'),
@@ -72,7 +74,7 @@ class Logs(models.Model):
     description = models.TextField()
     code_error = models.IntegerField()
     environment = models.CharField(max_length=20, choices=ENVIRONMENTS_CHOICES)
-    user = models.ForeignKey('Users', related_name='logs', on_delete=models.PROTECT)
+    user = models.ForeignKey('User', related_name='logs', on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativo')
     date_create = models.DateTimeField(auto_now_add=True)
 

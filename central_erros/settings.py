@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Setar o modelo de usuário a ser utilizado
-AUTH_USER_MODEL = 'api.Users'
+AUTH_USER_MODEL = 'api.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

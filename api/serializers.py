@@ -1,11 +1,9 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-
-from api.models import Logs
+from api.models import Log, User
 
 class LogsModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Logs
+        model = Log
         fields = ["level", "description", "code_error", "environment", "status"]
 
     def create(self, validated_data):
