@@ -77,6 +77,7 @@ class Log(models.Model):
     user = models.ForeignKey('User', related_name='logs', on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativo')
     date_create = models.DateTimeField(auto_now_add=True)
+    details = models.CharField(max_length=200)
 
     class Meta:
         db_table = 'logs'

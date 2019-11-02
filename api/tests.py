@@ -15,7 +15,7 @@ class TesteCentralErros(TestCase):
 
     def setUp(self):
         user = User.objects.create(username="SquadUm", first_name="Squad", last_name="Um", email="squadum@gmail.com", password="xxxxxxxxxxxxxxxxxxxxxxx")
-        Log.objects.create(level="CRITICAL", description="django.core.exceptions.ValidationError", code_error=1, environment="desenvolvimento", user=user)
+        Log.objects.create(level="CRITICAL", description="django.core.exceptions.ValidationError", code_error=1, environment="desenvolvimento", details="File '/home/alireza/test/lib/python3.4/site-packages/django/db/models/fields/__init__.py', line 1252", user=user)
         self.client = Client()
 
 
@@ -58,4 +58,5 @@ class TesteCentralErros(TestCase):
             token.count(),
             1
         )
+
 
