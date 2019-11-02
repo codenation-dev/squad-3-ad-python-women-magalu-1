@@ -4,7 +4,11 @@ import django
 django.setup()
 from django.test import TestCase
 from django.test.client import Client
+
+from rest_framework.authtoken.models import Token
+
 from api.models import User, Log
+
 
 
 class TesteCentralErros(TestCase):
@@ -23,9 +27,35 @@ class TesteCentralErros(TestCase):
         log = Log.objects.get(code_error=1)
         self.assertEqual(log.level, "CRITICAL")
 
-    '''def test_token(self):
-        params = {"username": "squadum@gmail.com", "password": "xxxxxxxxxxxxxxxxxxxxxxx"}
-        response = self.client.post('/token_auth/', params, content_type='application/json')
+    def test_create_user(self):
+        params = {
+            "username": "squadtres",
+            "first_name": "squad",
+            "last_name": "tres",
+            "email": "squadtres@gmail.com",
+            "password": "xxxxxxxxxxxxxxxxxxxxxxx"
+        }
 
-        assert isinstance(response.data, dict)
-        self.assertEqual(response.status_code, 200)'''
+        response = self.client.post('/api/user/', params, content_type='application/json')
+
+        assert isinstance(response.data, dict)        
+        self.assertEqual(response.status_code, 201)
+
+    def test_create_token(self):
+        params = {
+            "username": "squadtres",
+            "first_name": "squad",
+            "last_name": "tres",
+            "email": "squadtres@gmail.com",
+            "password": "xxxxxxxxxxxxxxxxxxxxxxx"
+        }
+
+        self.client.post('/api/user/', params, content_type='application/json')
+
+        token = Token.objects.all()
+
+        self.assertEqual(
+            token.count(),
+            1
+        )
+
