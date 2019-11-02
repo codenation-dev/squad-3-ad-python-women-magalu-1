@@ -22,7 +22,7 @@ A arquitetura do projeto é formada por:
 ## Documentação
 
 Acesse o link abaixo para ver a documentação.
-![](documentacao.html)
+<a href="documentacao.html" target="_blank">Doc</a>
 
 ## Observações
 
