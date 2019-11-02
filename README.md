@@ -19,6 +19,11 @@ A arquitetura do projeto é formada por:
 - deve consumir a API do produto
 - desenvolvida na forma de uma Single Page Application
 
+## Documentação
+
+Acesse o link abaixo para ver a documentação.
+![]documentacao.html
+
 ## Observações
 
 - Se a aceleração tiver ênfase no backend (Java, Python, C#, Go, PHP, etc) a equipe deve obrigatoriamente implementar a API. A implementação do frontend é considerado um bônus importante
