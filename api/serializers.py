@@ -11,17 +11,6 @@ class LogsModelSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
         
-'''
-{
-    "level": "critical", 
-    "description": "django.core.exceptions.ValidationError", 
-    "code_error": 1, 
-    "environment": "desenvolvimento", 
-    "status": "ativo",
-    "details": "File '/home/alireza/test/lib/python3.4/site-packages/django/db/models/fields/__init__.py', line 1252"
-}
-'''
-
 
 # Criar novo usuário no sistema
 class UserModelSerializer(serializers.ModelSerializer):

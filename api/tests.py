@@ -95,8 +95,4 @@ class TesteCentralErros(TestCase):
         response = self.client.post('/api/logs/', params, content_type='application/json', **headers)
 
         assert isinstance(response.data, dict)        
-        self.assertEqual(response.status_code, 201)
-
-
-        #get para o detalhes
-        # 
+        self.assertEqual(response.status_code, 201) 

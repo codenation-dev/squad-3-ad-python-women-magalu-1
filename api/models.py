@@ -74,7 +74,7 @@ class Log(models.Model):
     description = models.TextField()
     code_error = models.IntegerField()
     environment = models.CharField(max_length=20, choices=ENVIRONMENTS_CHOICES)
-    user = models.ForeignKey('User', related_name='logs', on_delete=models.PROTECT)
+    user = models.ForeignKey('User', related_name='logs', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativo')
     date_create = models.DateTimeField(auto_now_add=True)
     details = models.CharField(max_length=200)
