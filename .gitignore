@@ -1,6 +1,6 @@
 env/
 *.pyc
-
+migrations/
 *.sqlite3
 __pycache__
 .DS_Store
