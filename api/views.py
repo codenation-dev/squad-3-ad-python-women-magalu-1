@@ -2,6 +2,8 @@ from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
+from operator import itemgetter
+
 from rest_framework import status, viewsets, generics, filters
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes, action
@@ -46,23 +48,34 @@ class LogsAPIView(APIView):
         codes_erros = Log.objects.filter(user=request.user).values('code_error').annotate(Count('code_error'))
         query_params = request.query_params.dict()
 
-        order = 'date_create'
+        order = query_params.get('order', None)
+        reverse = bool(int(query_params.get('reverse', 0)))
+
+        if 'reverse' in query_params.keys():
+            query_params.pop('reverse')
+
         if 'order' in query_params.keys():
-            order = query_params.get('order')
             query_params.pop('order')
 
         response = []
         for code in codes_erros:
             query_params.update({'user': request.user,'code_error': code.get('code_error')})
             try:
-                log = Log.objects.filter(**query_params).order_by(order).values().first()
+                log = Log.objects.filter(**query_params).order_by('date_create').values().first()
             except:
-                msg = f'Campos para pesquisa ou ordenação: code_error, date_create, description, details, environment, id, level, status'
+                msg = f'Campos para pesquisa: code_error, date_create, description, details, environment, id, level, status'
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
             if log:
                 log.update({'count_erros': code.get('code_error__count')})
                 response.append(log)
+
+        if order:
+            try:
+                response = sorted(response, key=itemgetter(order), reverse=reverse) 
+            except:
+                msg = f'Campos para ordenar: code_error, date_create, description, details, environment, id, level, status, count_erros'
+                return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(response, status=status.HTTP_200_OK)
 
